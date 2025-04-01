@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="open_wizard_view_form" model="ir.ui.view">
+        <field name="name">open.wizard.form.view</field>
+        <field name="model">open.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Lost">
+                <group>
+                    <field name="send_to"/>
+                    <field name="subject"/>
+                </group>
+                <div>
+                    <field name="body" class="oe-bordered-editor" placeholder="Write your message here..." options="{'style-inline': true}"/>
+                    <group>
+                        <field name="attachment_ids" widget="many2many_binary" string="Attach a file" nolabel="1" colspan="2"/>
+<!--                        <field name="attachment_2_ids" widget="many2many_binary" string="Attach a file" nolabel="1" colspan="2"/>-->
+                    </group>
+                    <group>
+                        <field readonly="1" name="template_id" string="Load template" options="{'no_create': True}" class="w-50"/>
+                    </group>
+                </div>
+                <footer>
+                    <button name="action_send_email" string="Send" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+
+</odoo>

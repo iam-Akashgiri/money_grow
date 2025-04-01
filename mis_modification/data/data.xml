@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <!-- APPS MENU VISIBILITY ONLY FOR ADMIN-->
+    <record id="base.menu_management" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_erp_manager')])]"/>
+    </record>
+    <!-- EMPLOYEE MENU VISIBILITY ONLY FOR ADMIN-->
+    <record id="hr.menu_hr_root" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_erp_manager')])]"/>
+    </record>
+    <!-- DISCUSS MENU VISIBILITY ONLY FOR ADMIN-->
+    <record id="mail.menu_root_discuss" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_erp_manager')])]"/>
+    </record>
+    <!-- Contacts MENU VISIBILITY ONLY FOR ADMIN-->
+    <record id="contacts.menu_contacts" model="ir.ui.menu">
+        <field name="groups_id" eval="[(6,0,[ref('base.group_erp_manager')])]"/>
+    </record>
+
+    <record id="seq_app_id" model="ir.sequence">
+        <field name="name">Application ID Sequence</field>
+        <field name="code">mis.main.seq</field>
+        <!--        <field name="prefix"></field>-->
+        <field name="padding">10</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+
+    <record id="esbtr_seq_app_id" model="ir.sequence">
+        <field name="name">ESBTR Application ID Sequence</field>
+        <field name="code">esbtr.seq</field>
+        <!--        <field name="prefix"></field>-->
+        <field name="padding">6</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+
+    <record id="share_seq_app_id" model="ir.sequence">
+        <field name="name">Share certificate Application ID Sequence</field>
+        <field name="code">share.seq</field>
+        <!--        <field name="prefix"></field>-->
+        <field name="padding">6</field>
+        <field name="company_id" eval="False"/>
+    </record>
+
+    <record id="mail_template_of_attachment" model="mail.template">
+        <field name="name">Mail to Customer</field>
+        <field name="model_id" ref="mis_modification.model_mis_main"/>
+        <field name="subject">MIS Details</field>
+        <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>
+        <!--            <field name="email_from">{{ (object.company_id.email_formatted or user.email_formatted) }}</field>-->
+        <field name="email_to">it@allied.com</field>
+        <field name="body_html" type="html">
+            <div style="margin: 0px; padding: 0px;">
+                <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                    Dear IT Department
+                    <br/>
+                    <p>A attachment is attached</p>
+                    <p>Please review the details and take appropriate action.</p>
+                    <br/>
+                    Do not hesitate to contact us if you have any questions.
+                    <br/>
+                    <br/>
+                    Best regards,
+                    <p>Thank you.</p>
+                </p>
+            </div>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="bt_property_collection_view_form" model="ir.ui.view">
+            <field name="name">BT/Property Paper Collection</field>
+            <field name="model">bt.property.collection</field>
+            <field name="arch" type="xml">
+                <form string="BT/Property Paper Collection">
+                    <header>
+                        <button string="Submit" class="btn-secondary"
+                                type="object" name="action_submit" invisible="freeze_all"/>
+                        <button string="Set To Draft" class="btn-secondary"
+                                type="object" name="action_reset_to_draft" invisible="not freeze_all"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="sr_no" readonly="freeze_all"/>
+                                <field name="lan_no" readonly="freeze_all"/>
+                                <field name="cpc" readonly="freeze_all"/>
+                                <field name="customer_name" readonly="freeze_all"/>
+                                <field name="description" readonly="freeze_all"/>
+                                <field name="document_receive_date" readonly="freeze_all"/>
+                                <field name="transaction_type" readonly="freeze_all"/>
+                                <field name="previous_finance_name" readonly="freeze_all"/>
+                                <field name="property_address" readonly="freeze_all"/>
+                            </group>
+                            <group>
+                                <field name="communication_address" readonly="freeze_all"/>
+                                <field name="contact_no_1" widget="phone" readonly="freeze_all"/>
+                                <field name="contact_no_2" widget="phone" readonly="freeze_all"/>
+                                <field name="sm_name" readonly="freeze_all"/>
+                                <field name="data_shared_with_agency" readonly="freeze_all"/>
+                                <field name="calling_remarks" readonly="freeze_all"/>
+                                <field name="next_followup_date" readonly="freeze_all"/>
+                                <field name="document_status" readonly="freeze_all"/>
+                                <field name="document_submission_date" readonly="freeze_all"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="bt_property_collection_view_tree" model="ir.ui.view">
+            <field name="name">BT/Property Paper Collection</field>
+            <field name="model">bt.property.collection</field>
+            <field name="arch" type="xml">
+                <list string="BT/Property Paper Collection">
+                    <field name="sr_no"/>
+                    <field name="lan_no"/>
+                    <field name="cpc"/>
+                    <field name="customer_name"/>
+                    <field name="description"/>
+                    <field name="document_receive_date"/>
+                    <field name="transaction_type" optional="hide"/>
+                    <field name="previous_finance_name" optional="hide"/>
+                    <field name="property_address" optional="hide"/>
+                    <field name="communication_address" optional="hide"/>
+                    <field name="contact_no_1" optional="hide"/>
+                    <field name="contact_no_2" optional="hide"/>
+                    <field name="sm_name" optional="hide"/>
+                    <field name="data_shared_with_agency" optional="hide"/>
+                    <field name="calling_remarks" optional="hide"/>
+                    <field name="next_followup_date" optional="hide"/>
+                    <field name="document_status" optional="hide"/>
+                    <field name="document_submission_date" optional="hide"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="bt_property_collection_action" model="ir.actions.act_window">
+            <field name="name">BT/Property Paper Collection</field>
+            <field name="res_model">bt.property.collection</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem
+            id="menu_bt_property_collection"
+            name="BT/Property Paper Collection"
+            parent="mis_modification.mis_main_menu_root"
+            action="bt_property_collection_action"
+            sequence="40"/>
+
+
+    </data>
+</odoo>

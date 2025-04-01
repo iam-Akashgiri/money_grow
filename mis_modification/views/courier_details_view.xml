@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="courier_details_view_form" model="ir.ui.view">
+            <field name="name">Courier Details</field>
+            <field name="model">courier.details</field>
+            <field name="arch" type="xml">
+                <form string="Courier Details">
+                    <header>
+                        <button string="Submit" class="btn-secondary"
+                                type="object" name="action_submit" invisible="freeze_all"/>
+                        <button string="Set To Draft" class="btn-secondary"
+                                type="object" name="action_reset_to_draft" invisible="not freeze_all"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="sr_no" readonly="freeze_all"/>
+                                <field name="courier_company_name" readonly="freeze_all"/>
+                                <field name="courier_to" readonly="freeze_all"/>
+                                <field name="name_of_person" readonly="freeze_all"/>
+                                <field name="address" readonly="freeze_all"/>
+                            </group>
+                            <group>
+                                <field name="mob_no" widget="phone" readonly="freeze_all"/>
+                                <field name="docket_details" readonly="freeze_all"/>
+                                <field name="particulars" readonly="freeze_all"/>
+                                <field name="remarks" readonly="freeze_all"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="courier_details_view_tree" model="ir.ui.view">
+            <field name="name">Courier Details</field>
+            <field name="model">courier.details</field>
+            <field name="arch" type="xml">
+                <list string="Courier Details">
+                    <field name="sr_no"/>
+                    <field name="courier_company_name"/>
+                    <field name="courier_to"/>
+                    <field name="name_of_person"/>
+                    <field name="address"/>
+                    <field name="mob_no" optional="hide"/>
+                    <field name="docket_details" optional="hide"/>
+                    <field name="particulars" optional="hide"/>
+                    <field name="remarks" optional="hide"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="courier_details_action" model="ir.actions.act_window">
+            <field name="name">Courier Details</field>
+            <field name="res_model">courier.details</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem
+            id="menu_courier_details"
+            name="Courier Details"
+            parent="mis_modification.mis_main_menu_root"
+            action="courier_details_action"
+            sequence="60"/>
+
+
+    </data>
+</odoo>

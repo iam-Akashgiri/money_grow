@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="mail_template_view_wizard" model="ir.ui.view">
+            <field name="name">Mail Template</field>
+            <field name="model">mail.template.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Mail Template">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="mail_template_id"/>
+                                <field name="mail_to" readonly="1"/>
+                            </group>
+                            <group></group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Send" class="btn-primary"
+                                type="object" name="action_send"/>
+                        <button string="Cancel" class="btn-secondary"
+                                special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="share_certificate_view_form" model="ir.ui.view">
+            <field name="name">Share Certificate</field>
+            <field name="model">share.certificate</field>
+            <field name="arch" type="xml">
+                <form string="Share Certificate">
+                    <header>
+                        <button string="Submit" class="btn-secondary"
+                                type="object" name="action_submit" invisible="freeze_all"/>
+                        <button string="Set To Draft" class="btn-secondary"
+                                type="object" name="action_reset_to_draft" invisible="not freeze_all"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="sr_no" readonly="freeze_all"/>
+                                <field name="id" string="App ID" readonly="freeze_all" invisible="1"/>
+                                <field name="app_id"/>
+
+                                <field name="lan_no" readonly="freeze_all"/>
+                                <field name="cpc" readonly="freeze_all"/>
+                                <field name="customer_contact_no" widget="phone" readonly="freeze_all"/>
+                                <field name="customer_name" readonly="freeze_all"/>
+                                <field name="secretary_name" readonly="freeze_all"/>
+                                <field name="secretary_contact_no" widget="phone" readonly="freeze_all"/>
+                                <field name="property_address" readonly="freeze_all"/>
+                            </group>
+                            <group>
+                                <field name="data_shared_with_agency" readonly="freeze_all"/>
+                                <field name="calling_remarks" readonly="freeze_all"/>
+                                <field name="next_followup_date" readonly="freeze_all"/>
+                                <field name="document_status" readonly="freeze_all"/>
+                                <field name="share_certificate_receive_date" readonly="freeze_all"/>
+                                <field name="share_certificate_submission_date" readonly="freeze_all"/>
+                                <field name="remarks" readonly="freeze_all"/>
+                                <field name="share_certificate_society_sub_date" readonly="freeze_all"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="share_certificate_view_tree" model="ir.ui.view">
+            <field name="name">Share Certificate</field>
+            <field name="model">share.certificate</field>
+            <field name="arch" type="xml">
+                <list string="Share Certificate">
+                    <field name="app_id"/>
+
+                    <field name="sr_no"/>
+                    <field name="id" string="App ID"/>
+                    <field name="lan_no"/>
+                    <field name="cpc"/>
+                    <field name="customer_contact_no"/>
+                    <field name="customer_name"/>
+                    <field name="secretary_name" optional="hide"/>
+                    <field name="secretary_contact_no" optional="hide"/>
+                    <field name="property_address" optional="hide"/>
+                    <field name="data_shared_with_agency" optional="hide"/>
+                    <field name="calling_remarks" optional="hide"/>
+                    <field name="next_followup_date" optional="hide"/>
+                    <field name="document_status" optional="hide"/>
+                    <field name="share_certificate_receive_date" optional="hide"/>
+                    <field name="share_certificate_submission_date" optional="hide"/>
+                    <field name="remarks" optional="hide"/>
+                    <field name="share_certificate_society_sub_date" optional="hide"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="share_certificate_action" model="ir.actions.act_window">
+            <field name="name">Share Certificate</field>
+            <field name="res_model">share.certificate</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem
+                id="menu_share_certificate"
+                name="Share Certificate"
+                parent="mis_modification.mis_main_menu_root"
+                action="share_certificate_action"
+                sequence="50"/>
+
+
+    </data>
+</odoo>

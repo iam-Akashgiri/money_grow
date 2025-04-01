@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="group_submit_form" model="res.groups">
+            <field name="name">Submit Form</field>
+            <field name="comment">The user will be able to submit the form.</field>
+        </record>
+
+        <record id="group_set_to_draft_form" model="res.groups">
+            <field name="name">Set To Draft</field>
+            <field name="comment">The user will be able to reset the form.</field>
+        </record>
+
+</data>
+</odoo>

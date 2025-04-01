@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="vendor_payment_confirmation_view_tree" model="ir.ui.view">
+            <field name="name">Vendor Payment Confirmation</field>
+            <field name="model">vendor.payment.confirmation</field>
+            <field name="arch" type="xml">
+                <list string="Vendor Payment Confirmation" editable="bottom">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="vendor_payment_confirmation_action" model="ir.actions.act_window">
+            <field name="name">Vendor Payment Confirmation</field>
+            <field name="res_model">vendor.payment.confirmation</field>
+            <field name="view_mode">list</field>
+        </record>
+
+        <menuitem
+            id="menu_vendor_payment_confirmation"
+            name="Vendor Payment Confirmation"
+            parent="mis_modification.mis_main_menu_config_root"
+            action="vendor_payment_confirmation_action"
+            sequence="10"/>
+
+
+    </data>
+</odoo>

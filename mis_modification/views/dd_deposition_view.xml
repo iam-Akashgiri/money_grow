@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="dd_deposition_view_form" model="ir.ui.view">
+            <field name="name">DD Deposition</field>
+            <field name="model">dd.deposition</field>
+            <field name="arch" type="xml">
+                <form string="DD Deposition">
+                    <header>
+                        <button string="Submit" class="btn-secondary"
+                                type="object" name="action_submit" invisible="freeze_all"/>
+                        <button string="Set To Draft" class="btn-secondary"
+                                type="object" name="action_reset_to_draft" invisible="not freeze_all"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="sr_no" readonly="freeze_all"/>
+                                <field name="cpc" readonly="freeze_all"/>
+                                <field name="loan_disb_date" readonly="freeze_all"/>
+                                <field name="lan_no" readonly="freeze_all"/>
+                                <field name="customer_name" readonly="freeze_all"/>
+                                <field name="loan_amount" readonly="freeze_all"/>
+                            </group>
+                            <group>
+                                <field name="dd_no" readonly="freeze_all"/>
+                                <field name="type_of_transaction" readonly="freeze_all"/>
+                                <field name="name_of_sales_manager" readonly="freeze_all"/>
+                                <field name="bt_bank_name" readonly="freeze_all"/>
+                                <field name="dd_deposit_name" readonly="freeze_all"/>
+                                <field name="user_id" readonly="freeze_all"/>
+                                <field name="attachment" readonly="freeze_all"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <record id="dd_deposition_view_tree" model="ir.ui.view">
+            <field name="name">DD Deposition</field>
+            <field name="model">dd.deposition</field>
+            <field name="arch" type="xml">
+                <list string="DD Deposition">
+                    <field name="sr_no"/>
+                    <field name="data_date_shared"/>
+                    <field name="cpc"/>
+                    <field name="loan_disb_date"/>
+                    <field name="lan_no"/>
+                    <field name="customer_name" optional="hide"/>
+                    <field name="loan_amount" optional="hide"/>
+                    <field name="dd_no" optional="hide"/>
+                    <field name="type_of_transaction" optional="hide"/>
+                    <field name="name_of_sales_manager" optional="hide"/>
+                    <field name="bt_bank_name" optional="hide"/>
+                    <field name="dd_deposit_name" optional="hide"/>
+                    <field name="user_id" optional="hide"/>
+                    <field name="attachment" optional="hide"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="dd_deposition_action" model="ir.actions.act_window">
+            <field name="name">DD Deposition</field>
+            <field name="res_model">dd.deposition</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <menuitem
+            id="menu_dd_deposition"
+            name="DD Deposition"
+            parent="mis_modification.mis_main_menu_root"
+            action="dd_deposition_action"
+            sequence="30"/>
+
+
+    </data>
+</odoo>

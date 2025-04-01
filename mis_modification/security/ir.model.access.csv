@@ -1,0 +1,15 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_mis_main,mis_main,model_mis_main,base.group_user,1,1,1,1
+access_vendor_payment_confirmation,vendor_payment_confirmation,model_vendor_payment_confirmation,base.group_user,1,1,1,1
+access_rac_remarks,rac_remarks,model_rac_remarks,base.group_user,1,1,1,1
+access_vendor_remarks,vendor_remarks,model_vendor_remarks,base.group_user,1,1,1,1
+access_esbtr_mtr,esbtr_mtr,model_esbtr_mtr,base.group_user,1,1,1,1
+access_dd_deposition,dd_deposition,model_dd_deposition,base.group_user,1,1,1,1
+access_bt_property_collection,bt_property_collection,model_bt_property_collection,base.group_user,1,1,1,1
+access_share_certificate,share_certificate,model_share_certificate,base.group_user,1,1,1,1
+access_courier_details,courier_details,model_courier_details,base.group_user,1,1,1,1
+access_mail_template_wizard,mail_template_wizard,model_mail_template_wizard,base.group_user,1,1,1,1
+access_reconcile_records,reconcile_records,model_reconcile_records,base.group_user,1,1,1,1
+
+access_import_record_master,access_import_record_master,model_import_record_master,base.group_user,1,1,1,1
+template.access_open_wizard,access_open_wizard,model_open_wizard,base.group_user,1,1,1,1

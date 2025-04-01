@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="reconcile_records_view_tree" model="ir.ui.view">
+            <field name="name">Reconcile Records</field>
+            <field name="model">reconcile.records</field>
+            <field name="arch" type="xml">
+                <list string="Reconcile Records" editable="bottom">
+                    <field name="name" width="30%%" required="1"/>
+                    <field name="actual_date"/>
+                    <field name="value_date"/>
+                    <field name="bank_id"/>
+<!--                    <field name="mis_id"/>-->
+                    <field name="debit" optional="show" required="1"/>
+                    <field name="credit" optional="show" required="1"/>
+                    <field name="balance" optional="show" required="1"/>
+                    <button name="action_match" type="object" class="btn btn-dark btn-sm" string="Match" width="20%%"
+                    context="{'reco_id': id}"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="reconcile_records_action" model="ir.actions.act_window">
+            <field name="name">Reconcile Records</field>
+            <field name="res_model">reconcile.records</field>
+            <field name="view_mode">list</field>
+        </record>
+
+        <menuitem
+            id="menu_reconcile_records"
+            name="Reconcile Records"
+            parent="mis_modification.mis_main_menu_config_root"
+            action="reconcile_records_action"
+            sequence="40"/>
+
+
+    </data>
+</odoo>

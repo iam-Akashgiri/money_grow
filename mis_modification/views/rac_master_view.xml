@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="rac_remarks_view_tree" model="ir.ui.view">
+            <field name="name">RAC Remarks</field>
+            <field name="model">rac.remarks</field>
+            <field name="arch" type="xml">
+                <list string="RAC Remarks" editable="bottom">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="rac_remarks_action" model="ir.actions.act_window">
+            <field name="name">RAC Remarks</field>
+            <field name="res_model">rac.remarks</field>
+            <field name="view_mode">list</field>
+        </record>
+
+        <menuitem
+            id="menu_rac_remarks"
+            name="RAC Remarks"
+            parent="mis_modification.mis_main_menu_config_root"
+            action="rac_remarks_action"
+            sequence="20"/>
+
+
+    </data>
+</odoo>
