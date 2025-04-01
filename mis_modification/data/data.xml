@@ -14,9 +14,9 @@
         <field name="groups_id" eval="[(6,0,[ref('base.group_erp_manager')])]"/>
     </record>
     <!-- Contacts MENU VISIBILITY ONLY FOR ADMIN-->
-    <record id="contacts.menu_contacts" model="ir.ui.menu">
-        <field name="groups_id" eval="[(6,0,[ref('base.group_erp_manager')])]"/>
-    </record>
+<!--    <record id="contacts.menu_contacts" model="ir.ui.menu">-->
+<!--        <field name="groups_id" eval="[(6,0,[ref('base.group_erp_manager')])]"/>-->
+<!--    </record>-->
 
     <record id="mis_seq_app_id" model="ir.sequence">
         <field name="name">Application ID Sequence</field>
