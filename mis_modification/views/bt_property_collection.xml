@@ -16,6 +16,8 @@
                     <sheet>
                         <group>
                             <group>
+                                <field name="app_id"/>
+
                                 <field name="sr_no" readonly="freeze_all"/>
                                 <field name="lan_no" readonly="freeze_all"/>
                                 <field name="cpc" readonly="freeze_all"/>
@@ -49,6 +51,8 @@
             <field name="model">bt.property.collection</field>
             <field name="arch" type="xml">
                 <list string="BT/Property Paper Collection">
+                    <field name="app_id"/>
+
                     <field name="sr_no"/>
                     <field name="lan_no"/>
                     <field name="cpc"/>
@@ -78,11 +82,11 @@
         </record>
 
         <menuitem
-            id="menu_bt_property_collection"
-            name="BT/Property Paper Collection"
-            parent="mis_modification.mis_main_menu_root"
-            action="bt_property_collection_action"
-            sequence="40"/>
+                id="menu_bt_property_collection"
+                name="BT/Property Paper Collection"
+                parent="mis_modification.mis_main_menu_root"
+                action="bt_property_collection_action"
+                sequence="40"/>
 
 
     </data>

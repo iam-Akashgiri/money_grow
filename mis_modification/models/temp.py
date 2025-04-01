@@ -34,149 +34,15 @@ class ImportRecords(models.Model):
                                                         ('reconcile.records', 'Reconcile Records')
                                                         ], required=1)
 
-    def mis_button_action_view(self):
-        for record in self:
-            # Assuming there's at least one attachment; loop through all if needed
-            for attachment in record.attachment_ids:
-                # Get the file content (base64 encoded) and decode it
-                file_data = base64.b64decode(attachment.datas)
 
-                # Convert the binary data into a file-like object
-                excel_file = BytesIO(file_data)
-
-                # Read the Excel file using pandas
-                try:
-                    # Read all sheets or specify a sheet if needed
-                    df = pd.read_excel(excel_file, dtype={"App ID": str})
-                    date_columns = ['Clearance Date', 'EM Creation Date', 'NOI Receipt Received Date',
-                                    'Submitted To IGR', ]
-                    for col in date_columns:
-                        if col in df.columns:
-                            df[col] = pd.to_datetime(df[col], errors='coerce').dt.strftime("%Y-%m-%d")
-                    df = df.fillna(False)
-
-                    # Iterate through each row and print
-                    for index, row in df.iterrows():
-                        print(f"Row {index + 1}:")
-                        # print(row)
-                        rec_id = str(row.get('App ID')).zfill(6)
-                        # app_id = row.get('App ID')
-                        loan_amnt = row.get('Loan Amount')
-                        print('.........', rec_id, loan_amnt)
-                        vendor_payment_id = self.env['vendor.payment.confirmation'].search(
-                            [('name', '=', row.get('Vendor Payment'))], limit=1
-                        ).id
-                        rac_remarks_id = self.env['rac.remarks'].search(
-                            [('name', '=', row.get('RAC Remarks'))], limit=1
-                        ).id
-                        vendor_remarks_id = self.env['vendor.remarks'].search(
-                            [('name', '=', row.get('Vendor Remarks'))], limit=1
-                        ).id
-                        cpc_id = self.env['res.partner'].search(
-                            [('name', '=', row.get('CPC'))], limit=1
-                        ).id
-
-                        data = {
-                            'sr_no': row.get('SR.NO'),
-                            'app_id': rec_id or obj.app_id,
-                            'cpc': cpc_id,
-                            'customer_name': row.get('Customer Name'),
-                            'lan_no': row.get('LAN No'),
-                            'product': row.get('Product - HL/LAP/ HL BT/ LAP BT'),
-                            'sales_manager_name': row.get('Sales Manager Name'),
-                            'sales_manager_mob_no': row.get('Sales Manager Mobile No'),
-                            'customer_contact_no': row.get('Customer Contact No'),
-                            'customer_email': row.get('Customer Email'),
-                            'loan_amount': loan_amnt,
-                            'mode': row.get('Mode - Chq/DD/Online'),
-                            'cheq_dd': row.get('Cheque/DD Number'),
-                            'cheq_dd_amount': row.get('Cheque/DD Amount'),
-                            'clearance_date': row.get('Clearance Date'),
-                            'cheq_dd_bank_name': row.get('Chq/DD Bank Name'),
-                            'payment_details': row.get('Payment Details'),
-                            'vendor_payment_id': vendor_payment_id,
-                            'fsd_received': row.get('FSD Received (Y/N)'),
-                            'document_sharing_status': row.get('Document Sharing Status'),
-                            'rac_remarks': rac_remarks_id,
-                            'vendor_remarks': vendor_remarks_id,
-                            'all_data_shared_with_anulom': row.get('All Data Shared With Anulom(Date)'),
-                            'em_creation_date': row.get('EM Creation Date'),
-                            'noi_receipt_received_date': row.get('NOI Receipt Received Date'),
-
-                        }
-                        # validations----------------------------------------
-                        vendor_rem = row.get('Vendor Remarks')
-                        vendor_payment = row.get('Vendor Payment')
-                        rac_rem = row.get('RAC Remarks')
-                        sr_no = row.get('SR.NO')
-                        cpc_name = row.get('CPC')
-
-                        if not pd.isna(sr_no):
-                            if not str(sr_no).isdigit():
-                                raise ValidationError(f"Srno cannot be String in row{index+1}")
-
-                        if cpc_name:
-                            cpc_record = self.env['res.partner'].search([('name', '=', cpc_name)])
-                            if not cpc_record:
-                                raise ValidationError(f"CPC '{row.get('CPC')}' not found in res.partner in row {index+1}")
-                            cpc_id = cpc_record.id
-                        else:
-                            cpc_id = False
-
-                        if vendor_payment:
-                            vendor_pay_record = self.env['vendor.payment.confirmation'].search(
-                                [('name', '=', vendor_payment)])
-                            if not vendor_pay_record:
-                                raise ValidationError(
-                                    f"vendor '{row.get('Vendor Payment')}' not found in vendor.payment.confirmation in row {index+1}")
-                            vendor_payment_id = vendor_pay_record.id
-                        else:
-                            vendor_payment_id = False
-
-                        if vendor_rem:
-                            vendor_rem_record = self.env['vendor.remarks'].search([('name', '=', vendor_rem)])
-                            if not vendor_rem_record:
-                                raise ValidationError(
-                                    f"vendor '{row.get('Vendor Remarks')}' not found in vendor.remarks in row {index+1}")
-                            vendor_remarks_id = vendor_rem_record.id
-                        else:
-                            vendor_remarks_id = False
-
-                        if rac_rem:
-                            rac_rem_record = self.env['rac.remarks'].search([('name', '=', rac_rem)])
-                            if not rac_rem_record:
-                                raise ValidationError(
-                                    f"'{row.get('RAC Remarks')}' not found in rac.remarks in row {index+1}")
-                            rac_remarks_id = rac_rem_record.id
-                        else:
-                            rac_remarks_id = False
-
-                        # validations----------------------------------------
-
-                        if rec_id:
-                            obj = self.env['mis.main'].search([('app_id', '=', rec_id)])
-                            if obj:
-
-                                obj.write(data)
-                            else:
-                                self.env['mis.main'].create(data)
-                except Exception as e:
-                    print(f"Error reading Excel file: {str(e)}")
-                    raise ValidationError(str(e))
 
     def esbtr_button_action_view(self):
         for record in self:
-            # Assuming there's at least one attachment; loop through all if needed
             for attachment in record.attachment_ids:
-                # Get the file content (base64 encoded) and decode it
                 file_data = base64.b64decode(attachment.datas)
-
-                # Convert the binary data into a file-like object
                 excel_file = BytesIO(file_data)
 
-                # Read the Excel file using pandas
                 try:
-                    # Read all sheets or specify a sheet if needed
                     df = pd.read_excel(excel_file, dtype={"App ID": str})
                     date_columns = ['Data Date', 'Processing Date', 'Funds Receive Date',
                                     'Submission Date', ]
@@ -185,7 +51,6 @@ class ImportRecords(models.Model):
                             df[col] = pd.to_datetime(df[col], errors='coerce').dt.strftime("%Y-%m-%d")
                     df = df.fillna(False)
 
-                    # Iterate through each row and print
                     for index, row in df.iterrows():
                         print(f"Row {index + 1}:")
                         # print(row)
@@ -198,49 +63,12 @@ class ImportRecords(models.Model):
                             [('name', '=', row.get('CPC'))], limit=1
                         ).id
 
-                        sr_no = row.get('SR.NO')
-                        cpc_name = row.get('CPC')
-                        product_name = row.get('Product')
-
-                        # validations---------------------------------------------
-                        if not pd.isna(sr_no):
-                            if not str(sr_no).isdigit():
-                                raise ValidationError(f"Srno cannot be String in row{index+1}")
-
-                        if cpc_name:
-                            cpc_record = self.env['res.partner'].search([('name', '=', cpc_name)])
-                            if not cpc_record:
-                                raise ValidationError(f"CPC '{row.get('CPC')}' not found in res.partner in row {index+1}")
-                            cpc_id = cpc_record.id
-                        else:
-                            cpc_id = False
-
-                        if product_name:
-                            product_record = self.env['product.product'].search([('name', '=', product_name)])
-                            if not product_record:
-                                raise ValidationError(f"CPC '{row.get('Product')}' not found in res.partner.")
-                            product_id = product_record.id
-                        else:
-                            product_id = False
-
-                        # validations---------------------------------------------
-
                         if rec_id:
                             # Search for the record by ID
                             obj = self.env['esbtr.mtr'].search([('app_id', '=', rec_id)])
                             print(obj)
                             if obj:
-                                sr_no = row.get('SR.NO')
-                                if not pd.isna(sr_no):
-                                    if not str(sr_no).isdigit():
-                                        raise ValidationError(f"Srno cannot be String in row{index+1}")
-
-                                # if not pd.isna(cpc_id):
-                                #     cpc_name = self.env['res.partner'].search(
-                                #         [('name', '=', cpc_id)]
-                                #     )
-                                #     if not cpc_name:
-                                #         raise ValidationError(f"{cpc_name} not found")
+                                print(f"Existing record found for App ID: {rec_id}")
                                 obj.write({
                                     'sr_no': row.get('SR.NO'),
                                     'app_id': rec_id or obj.app_id,
@@ -283,6 +111,7 @@ class ImportRecords(models.Model):
 
                 except Exception as e:
                     print(f"Error reading Excel file: {str(e)}")
+
                     raise ValidationError(str(e))
 
     def share_button_action_view(self):
@@ -305,7 +134,7 @@ class ImportRecords(models.Model):
                     for col in date_columns:
                         if col in df.columns:
                             df[col] = pd.to_datetime(df[col], errors='coerce').dt.strftime("%Y-%m-%d")
-                    df = df.fillna(False)
+                            df = df.fillna(False)
 
                     # Iterate through each row and print
                     for index, row in df.iterrows():
@@ -316,24 +145,6 @@ class ImportRecords(models.Model):
                         cpc_id = self.env['res.partner'].search(
                             [('name', '=', row.get('CPC'))], limit=1
                         ).id
-
-                        sr_no = row.get('SR.NO')
-                        cpc_name = row.get('CPC')
-
-                        # validations---------------------------------------------
-                        if not pd.isna(sr_no):
-                            if not str(sr_no).isdigit():
-                                raise ValidationError(f"Srno cannot be String in row{index+1}")
-
-                        if cpc_name:
-                            cpc_record = self.env['res.partner'].search([('name', '=', cpc_name)])
-                            if not cpc_record:
-                                raise ValidationError(f"CPC '{row.get('CPC')}' not found in res.partner in row {index+1}")
-                            cpc_id = cpc_record.id
-                        else:
-                            cpc_id = False
-
-                        # validations---------------------------------------------
 
                         if rec_id:
                             # Search for the record by ID
@@ -361,6 +172,17 @@ class ImportRecords(models.Model):
 
                             }
                             if obj:
+                                sr_no = row.get('SR.NO')
+                                if not pd.isna(sr_no):
+                                    if not str(sr_no).isdigit():
+                                        raise ValidationError("Srno cannot be String")
+
+                                if not pd.isna(cpc_id):
+                                    cpc_name = self.env['res.partner'].search(
+                                        [('name', '=', cpc_id)]
+                                    ).id
+                                    if not cpc_id:
+                                        raise ValidationError(f"{row.get('CPC')} not found")
 
                                 print(f"Existing record found for App ID: {rec_id}")
                                 obj.write(data)
@@ -392,7 +214,7 @@ class ImportRecords(models.Model):
                     for col in date_columns:
                         if col in df.columns:
                             df[col] = pd.to_datetime(df[col], errors='coerce').dt.strftime("%Y-%m-%d")
-                    df = df.fillna(False)
+                            df = df.fillna(False)
                     # Iterate through each row and print
                     for index, row in df.iterrows():
                         print(f"Row {index + 1}:")
@@ -402,38 +224,6 @@ class ImportRecords(models.Model):
                         cpc_id = self.env['res.partner'].search(
                             [('name', '=', row.get('CPC'))], limit=1
                         ).id
-
-                        user_id = self.env['hr.employee'].search(
-                            [('name', '=', row.get('User'))]
-                        ).id
-
-                        sr_no = row.get('SR.NO')
-                        cpc_name = row.get('CPC')
-                        user_name = row.get('User')
-
-                        # validations---------------------------------------------
-                        if not pd.isna(sr_no):
-                            if not str(sr_no).isdigit():
-                                raise ValidationError(f"Srno cannot be String in row{index+1}")
-
-                        if cpc_name:
-                            cpc_record = self.env['res.partner'].search([('name', '=', cpc_name)])
-                            if not cpc_record:
-                                raise ValidationError(f"CPC '{row.get('CPC')}' not found in res.partner in row {index+1}")
-                            cpc_id = cpc_record.id
-                        else:
-                            cpc_id = False
-
-
-                        if user_name:
-                            user_record = self.env['hr.employee'].search([('name', '=', user_name)])
-                            if not user_record:
-                                raise ValidationError(f"User '{row.get('User')}' not found in hr.employee.")
-                            user_id = user_record.id
-                        else:
-                            user_id = False
-
-                        # validations---------------------------------------------
 
                         if rec_id:
                             # Search for the record by ID
@@ -453,10 +243,10 @@ class ImportRecords(models.Model):
                                         row.get('Loan Amount')) else False,
                                     'dd_no': row.get('DD No'),
                                     'type_of_transaction': row.get('Type of Transaction'),
-                                    'name_of_sales_manager': row.get('Name of Sales Manager'),
+                                    'name_of_sales_manager': row.get('Sales Manager'),
                                     'bt_bank_name': row.get('BT Bank Name'),
                                     'dd_deposit_name': row.get('DD Deposit Name'),
-                                    'user_id': user_id or False,
+                                    'user_id': row.get('User') or False,
 
                                 })
                                 print('Performed Write On Record')
@@ -474,10 +264,10 @@ class ImportRecords(models.Model):
                                         row.get('Loan Amount')) else False,
                                     'dd_no': row.get('DD No'),
                                     'type_of_transaction': row.get('Type of Transaction'),
-                                    'name_of_sales_manager': row.get('Name of Sales Manager'),
+                                    'name_of_sales_manager': row.get('Sales Manager'),
                                     'bt_bank_name': row.get('BT Bank Name'),
                                     'dd_deposit_name': row.get('DD Deposit Name'),
-                                    'user_id': user_id or False,
+                                    'user_id': row.get('User') or False,
                                 })
                                 print('Performed Create On Record')
 
@@ -506,7 +296,7 @@ class ImportRecords(models.Model):
                     for col in date_columns:
                         if col in df.columns:
                             df[col] = pd.to_datetime(df[col], errors='coerce').dt.strftime("%Y-%m-%d")
-                    df = df.fillna(False)
+                            df = df.fillna(False)
                     # for col in date_columns:
                     #     if col in df.columns:
                     #         if df[col].isnull():
@@ -528,24 +318,6 @@ class ImportRecords(models.Model):
                         cpc_id = self.env['res.partner'].search(
                             [('name', '=', row.get('CPC'))], limit=1
                         ).id
-
-                        sr_no = row.get('SR.NO')
-                        cpc_name = row.get('CPC')
-
-                        # validations---------------------------------------------
-                        if not pd.isna(sr_no):
-                            if not str(sr_no).isdigit():
-                                raise ValidationError(f"Srno cannot be String in row{index+1}")
-
-                        if cpc_name:
-                            cpc_record = self.env['res.partner'].search([('name', '=', cpc_name)])
-                            if not cpc_record:
-                                raise ValidationError(f"CPC '{row.get('CPC')}' not found in res.partner in row {index+1}")
-                            cpc_id = cpc_record.id
-                        else:
-                            cpc_id = False
-
-                        # validations---------------------------------------------
 
                         if rec_id:
                             # Search for the record by ID
@@ -629,24 +401,6 @@ class ImportRecords(models.Model):
                         courier_company_id = self.env['res.partner'].search(
                             [('name', '=', row.get('Courier Company Name'))], limit=1
                         ).id
-
-                        sr_no = row.get('SR.NO')
-                        cpc_name = row.get('CPC')
-
-                        # validations---------------------------------------------
-                        if not pd.isna(sr_no):
-                            if not str(sr_no).isdigit():
-                                raise ValidationError(f"Srno cannot be String in row{index+1}")
-
-                        if cpc_name:
-                            cpc_record = self.env['res.partner'].search([('name', '=', cpc_name)])
-                            if not cpc_record:
-                                raise ValidationError(f"CPC '{row.get('CPC')}' not found in res.partner in row {index+1}")
-                            cpc_id = cpc_record.id
-                        else:
-                            cpc_id = False
-
-                        # validations---------------------------------------------
 
                         if rec_id:
                             # Search for the record by ID
@@ -843,8 +597,9 @@ class ImportRecords(models.Model):
                     for col in date_columns:
                         if col in df.columns:
                             df[col] = pd.to_datetime(df[col], errors='coerce').dt.strftime("%Y-%m-%d")
-                    df = df.fillna(False)
+                            df = df.fillna(False)
 
+                    # Iterate through each row and print
                     for index, row in df.iterrows():
                         print(f"Row {index + 1}:")
                         # print(row)

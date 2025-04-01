@@ -7,6 +7,8 @@
             <field name="model">rac.remarks</field>
             <field name="arch" type="xml">
                 <list string="RAC Remarks" editable="bottom">
+                    <field name="app_id"/>
+
                     <field name="name"/>
                 </list>
             </field>
@@ -19,11 +21,11 @@
         </record>
 
         <menuitem
-            id="menu_rac_remarks"
-            name="RAC Remarks"
-            parent="mis_modification.mis_main_menu_config_root"
-            action="rac_remarks_action"
-            sequence="20"/>
+                id="menu_rac_remarks"
+                name="RAC Remarks"
+                parent="mis_modification.mis_main_menu_config_root"
+                action="rac_remarks_action"
+                sequence="20"/>
 
 
     </data>

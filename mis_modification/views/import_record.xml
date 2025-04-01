@@ -10,23 +10,31 @@
                             invisible="model != 'mis.main'"/>
                     <button name="esbtr_button_action_view" string="Import ESBTR" type="object" class="btn-primary"
                             invisible="model != 'esbtr.mtr'"/>
-                    <button name="share_button_action_view" string="Import Share Certificate" type="object" class="btn-primary"
+                    <button name="share_button_action_view" string="Import Share Certificate" type="object"
+                            class="btn-primary"
                             invisible="model != 'share.certificate'"/>
-                    <button name="dd_deposition_button_action_view" string="Import DD Deposition" type="object" class="btn-primary"
+                    <button name="dd_deposition_button_action_view" string="Import DD Deposition" type="object"
+                            class="btn-primary"
                             invisible="model != 'dd.deposition'"/>
-                    <button name="bt_property_button_action_view" string="Import BT Property Collection" type="object" class="btn-primary"
+                    <button name="bt_property_button_action_view" string="Import BT Property Collection" type="object"
+                            class="btn-primary"
                             invisible="model != 'bt.property.collection'"/>
-                    <button name="courier_button_action_view" string="Import Courier Details" type="object" class="btn-primary"
+                    <button name="courier_button_action_view" string="Import Courier Details" type="object"
+                            class="btn-primary"
                             invisible="model != 'courier.details'"/>
-                    <button name="vendor_payment_button_action_view" string="Import Vendor Payment Confirmation" type="object" class="btn-primary"
+                    <button name="vendor_payment_button_action_view" string="Import Vendor Payment Confirmation"
+                            type="object" class="btn-primary"
                             invisible="model != 'vendor.payment.confirmation'"/>
-                    <button name="rac_remarks_button_action_view" string="Import RAC Remarks" type="object" class="btn-primary"
+                    <button name="rac_remarks_button_action_view" string="Import RAC Remarks" type="object"
+                            class="btn-primary"
                             invisible="model != 'rac.remarks'"/>
-                    <button name="vendor_remarks_button_action_view" string="Import Vendor Remarks" type="object" class="btn-primary"
+                    <button name="vendor_remarks_button_action_view" string="Import Vendor Remarks" type="object"
+                            class="btn-primary"
                             invisible="model != 'vendor.remarks'"/>
                     <button name="reconcile_records_button_action_view" string="Import Reconcile Records" type="object"
                             class="btn-primary" invisible="model != 'reconcile.records'"/>
                 </header>
+
                 <sheet>
                     <group>
                         <field name="attachment_ids" widget="many2many_binary"/>

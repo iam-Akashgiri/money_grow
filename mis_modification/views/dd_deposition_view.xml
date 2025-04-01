@@ -16,6 +16,8 @@
                     <sheet>
                         <group>
                             <group>
+                                <field name="app_id"/>
+
                                 <field name="sr_no" readonly="freeze_all"/>
                                 <field name="cpc" readonly="freeze_all"/>
                                 <field name="loan_disb_date" readonly="freeze_all"/>
@@ -44,6 +46,8 @@
             <field name="model">dd.deposition</field>
             <field name="arch" type="xml">
                 <list string="DD Deposition">
+                    <field name="app_id"/>
+
                     <field name="sr_no"/>
                     <field name="data_date_shared"/>
                     <field name="cpc"/>
@@ -69,11 +73,11 @@
         </record>
 
         <menuitem
-            id="menu_dd_deposition"
-            name="DD Deposition"
-            parent="mis_modification.mis_main_menu_root"
-            action="dd_deposition_action"
-            sequence="30"/>
+                id="menu_dd_deposition"
+                name="DD Deposition"
+                parent="mis_modification.mis_main_menu_root"
+                action="dd_deposition_action"
+                sequence="30"/>
 
 
     </data>

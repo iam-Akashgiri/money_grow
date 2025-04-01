@@ -16,6 +16,8 @@
                     <sheet>
                         <group>
                             <group>
+                                                                <field name="app_id"/>
+
                                 <field name="sr_no" readonly="freeze_all"/>
                                 <field name="courier_company_name" readonly="freeze_all"/>
                                 <field name="courier_to" readonly="freeze_all"/>
@@ -40,6 +42,8 @@
             <field name="model">courier.details</field>
             <field name="arch" type="xml">
                 <list string="Courier Details">
+                                                    <field name="app_id"/>
+
                     <field name="sr_no"/>
                     <field name="courier_company_name"/>
                     <field name="courier_to"/>

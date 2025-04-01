@@ -8,15 +8,16 @@ class ReconcileRecords(models.Model):
     _rec_name = "name"
 
     name = fields.Char("Label", tracking=True)
-    actual_date = fields.Date("Actual Date")
-    value_date = fields.Date("Value Date")
-    bank_id = fields.Date("Bank")
-    debit = fields.Float("Debit")
-    credit = fields.Float("Credit")
-    balance = fields.Float("Running Balance")
+    actual_date = fields.Date("Actual Date", tracking=True)
+    value_date = fields.Date("Value Date", tracking=True)
+    bank_id = fields.Date("Bank", tracking=True)
+    debit = fields.Float("Debit", tracking=True)
+    credit = fields.Float("Credit", tracking=True)
+    balance = fields.Float("Balance", tracking=True)
+    app_id = fields.Char(string="App ID", readonly=True, tracking=True)
+
     # mis_id = fields.Many2one(comodel_name='mis.main', string="MIS")
     mis_id = fields.Many2one(comodel_name='mis.main', string="MIS")
-
 
     _sql_constraints = [
         ('uniq_name', 'unique(name)', "Label Must Be Unique"),

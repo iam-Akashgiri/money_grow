@@ -7,6 +7,8 @@
             <field name="model">vendor.payment.confirmation</field>
             <field name="arch" type="xml">
                 <list string="Vendor Payment Confirmation" editable="bottom">
+                    <field name="app_id"/>
+
                     <field name="name"/>
                 </list>
             </field>
@@ -19,11 +21,11 @@
         </record>
 
         <menuitem
-            id="menu_vendor_payment_confirmation"
-            name="Vendor Payment Confirmation"
-            parent="mis_modification.mis_main_menu_config_root"
-            action="vendor_payment_confirmation_action"
-            sequence="10"/>
+                id="menu_vendor_payment_confirmation"
+                name="Vendor Payment Confirmation"
+                parent="mis_modification.mis_main_menu_config_root"
+                action="vendor_payment_confirmation_action"
+                sequence="10"/>
 
 
     </data>
